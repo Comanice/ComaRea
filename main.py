@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, session
 from website import create_app
 
 
@@ -9,6 +9,7 @@ app = create_app()
 # Invalid URL
 @app.errorhandler(404)
 def page_not_found(error):
+    session['_404_redirect'] = True
     return render_template('error404.html'), 404
 
 

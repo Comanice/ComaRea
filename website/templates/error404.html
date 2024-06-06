@@ -6,8 +6,43 @@
     <title>Page Not Found</title>
 </head>
 <body>
-    <h1>404 - Page Not Found</h1>
-    <p>The page you are looking for does not exist.</p>
-    <p>If you believe this is a mistake, please try logging in.</p>
+<h1>404 - Page Not Found</h1>
+<p>The page you are looking for does not exist.</p>
+<p>If you believe this is a mistake, please try logging in or signing up.</p>
+<style>
+    .btn-custom {
+        background-color: #1BA098;
+        border-color: #1BA098;
+        color: white;
+        width: 100px; /* Adjust the width as needed */
+        height: 40px; /* Adjust the height as needed */
+        font-size: 20px;
+    }
+
+    .btn-custom:hover {
+        background-color: #126d67;
+        color: white;
+    }
+
+    .inline-form {
+        display: inline-block; /* Display forms inline */
+        margin: 0; /* Remove default margin */
+        padding: 0; /* Remove default padding */
+        }
+
+    .button-container {
+    text-align: left; /* Align buttons to the center */
+    }
+</style>
+<div class="button-container">
+    <form method="POST" action="/login" class="inline-form">
+        <input type="hidden" name="_404_redirect" value="1">
+        <button type="submit" class="btn btn-custom">Login</button>
+    </form>
+    <form method="POST" action="/sign-up" class="inline-form">
+        <input type="hidden" name="_404_redirect" value="1">
+        <button type="submit" class="btn btn-custom">Sign Up</button>
+    </form>
+</div>
 </body>
 </html>

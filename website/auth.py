@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, session
 from website.models import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
@@ -15,6 +15,12 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+
+        if session.get('_404_redirect'):
+            # Clear the session variable
+            session.pop('_404_redirect', None)
+            # Redirect the user to the sign-up page
+            return redirect(url_for('auth.login'))
 
         user = User.query.filter_by(username=username).first()
         if user:
@@ -55,6 +61,16 @@ def sign_up():
     if request.method == 'POST':
         email = request.form.get('email')
         username = request.form.get('username')
+
+        if session.get('_404_redirect'):
+            # Clear the session variable
+            session.pop('_404_redirect', None)
+            # Redirect the user to the sign-up page
+            return redirect(url_for('auth.sign_up'))
+
+        if not email:
+            flash('Email address is required.', category='error')
+            return render_template("sign_up.html", user=current_user)
 
         user = User.query.filter_by(username=username).first()
         user_email = User.query.filter_by(email=email).first()
