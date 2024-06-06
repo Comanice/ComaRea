@@ -19,7 +19,7 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    # Only if we run this file not just import it, we execuㅅe the next line.
+    # Only if we run this file not just import it, we execute the next line.
     app.run(debug=True)
     # Because in case we import main.py in another file, it would run the server.
 
