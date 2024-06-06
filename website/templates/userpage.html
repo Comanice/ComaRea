@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block content %}
+<style>
+    color: #DEB992
+</style>
+<h1 align = center> Hello {{ user.username|capitalize }}! </h1>
+<h3 align = center> Welcome to your profile page! </h3>
+<div class="text-center">
+  <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/61f1b112-2cb0-40b0-a6b9-9ab92066e5c7/d33mwsf-0dd81126-6d91-4b0d-905c-886a1a41566c.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYxZjFiMTEyLTJjYjAtNDBiMC1hNmI5LTlhYjkyMDY2ZTVjN1wvZDMzbXdzZi0wZGQ4MTEyNi02ZDkxLTRiMGQtOTA1Yy04ODZhMWE0MTU2NmMucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.L1TKNejYQvgjxpf-RG78w_VWYwPL4obeec-BqOB-gmw" class="img-fluid" alt="Home Page Image">
+</div>
+<h4>Here you can: </h4>
+{% for possibility in possibilities %}
+    {{ possibility }}<br/>
+{% endfor %}
+<br/>
+{{ possibilities.0 }}
+{% endblock %}

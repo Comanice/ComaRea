@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Feedback Page{% endblock %}
+{% block content %}
+<style>
+    #notes .list-group-item{
+    background-color: #DEB992 !important;
+    color: white;
+    }
+</style>
+<style>
+    .btn-custom {
+        background-color: #1BA098;
+        color: white;
+    }
+
+    .btn-custom:hover {
+        background-color: #126d67;
+        color: white;
+    }
+</style>
+<h1 align="center">Feedback Page</h1>
+<br />
+<h6 align="center"> This is the space for users only!</h6>
+<div class="text-center">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1mYeBS9Kcz8c-LuzMd02A45F-spmMblFMVg&s" class="img-fluid" alt="Home Page Image">
+</div>
+<br />
+<h6 align="center"> Please leave some ideas for new website features and new games!</h6>
+<br />
+<h2 align="center">Your Feedback</h2>
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item">{{ note.data }}
+        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <textarea name="note" id="note" class="form-control"></textarea>
+    <br />
+    <div align="center">
+    <button type="submit" class="btn btn-custom">Add Note</button>
+    </div>
+</form>
+{% endblock %}
