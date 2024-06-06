@@ -46,6 +46,16 @@ def delete_note():
 def userpage(username):
     possibilities = ['Change appearance', 'See reached level and points', 'Make a point purchase and see status of order']
     user = User.query.filter_by(username=username).first()
+
     if not user:
         abort(404)
+
+    if current_user.is_authenticated:
+        if current_user.username == username:
+            return render_template("userpage.html", username=username, possibilities=possibilities)
+        else:
+            abort(404)
+    else:
+        abort(404)
+
     return render_template('userpage.html', user=user, possibilities=possibilities)
