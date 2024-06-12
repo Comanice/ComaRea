@@ -12,6 +12,8 @@ auth = Blueprint('auth', __name__)
 # Create a route decorator
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    next_url = request.args.get('next')
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -27,7 +29,10 @@ def login():
             if check_password_hash(user.password, password):
                 flash('Logged in successfully!', category='success')
                 login_user(user, remember=True)
-                return redirect(url_for('views.home'))
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    return redirect(url_for('views.home'))
             else:
                 flash('Incorrect password, try again.', category='error')  # Typo corrected here
         else:

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, jsonify, abort, redirect, url_for
+from flask import Blueprint, render_template, request, flash, jsonify, abort, redirect, url_for, session
 from flask_login import login_required, current_user
 from .models import Note, User, Form
 from . import db
@@ -35,6 +35,9 @@ def notes():
         flash('Note added successfully!', category='success')
         return redirect(url_for('views.notes'))
     """
+    if not current_user.is_authenticated:
+        flash('Please log in to access this page.', category="error")
+        return redirect(url_for('auth.login', next=request.path))
 
     return render_template("feedback.html", user=current_user, form=form)
 
@@ -61,10 +64,12 @@ def userpage(username):
     if not user:
         abort(404)
 
-    if current_user.is_authenticated:
-        if current_user.username == username:
-            return render_template("userpage.html", username=username, user=user, possibilities=possibilities)
-        else:
-            abort(404)
+    if not current_user.is_authenticated:
+        flash("Please log in to access this page.", category="error")
+        return redirect(url_for('auth.login', next=request.path))
+
+    if current_user.username == username:
+        return render_template("userpage.html", username=username, user=user, possibilities=possibilities)
+
     else:
         abort(404)
