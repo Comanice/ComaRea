@@ -27,9 +27,13 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    login_manager = LoginManager()
+    login_manager = LoginManager()  # provides features like user login, logout, and session management
     login_manager.login_view = 'auth.login'
+    # login_view is an attribute of LoginManager that specifies the view function that handles logins
+    # 'auth.login' is the name of the view function that will be called when a user tries to access a protected page and
+    # is not authenticated
     login_manager.init_app(app)
+    # This method sets up the necessary configurations and attaches the LoginManager instance to the Flask application.
 
     @login_manager.user_loader
     def load_user(id):

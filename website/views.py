@@ -1,6 +1,6 @@
-from flask import Blueprint, render_template, request, flash, jsonify, abort, redirect, url_for, session
+from flask import Blueprint, render_template, request, flash, jsonify, abort, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Note, User, Form
+from .models import Note, User, FeedbackForm
 from . import db
 import json
 from flask_wtf import FlaskForm
@@ -18,7 +18,7 @@ def home():
 @views.route('/feedback', methods=['GET', 'POST'])
 @login_required
 def notes():
-    form = Form()
+    form = FeedbackForm()
     if form.validate_on_submit():
         note = form.feedback.data
         new_note = Note(data=note, user_id=current_user.id)
@@ -36,7 +36,7 @@ def notes():
         return redirect(url_for('views.notes'))
     """
     if not current_user.is_authenticated:
-        flash('Please log in to access this page.', category="error")
+        flash('Please log in to access this page.', category='error')
         return redirect(url_for('auth.login', next=request.path))
 
     return render_template("feedback.html", user=current_user, form=form)

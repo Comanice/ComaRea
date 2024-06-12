@@ -20,3 +20,10 @@ Chatbot:
     - Direct to useful pages
     - Direct to help site
     - Motivate to play Korean learning games
+
+
+Other website functions:
+    - Get a Admin user that can access visibly comfortable all important data: Peoples username, email, etc.
+    - Get a E-mail verification function + reset password function
+    - Safety system: Safe for hackers and trolls, making sure feedback messages for example are filtered and ban function
+    - Feedback can be marked as submitted, then read and then in progress or rejected with a note that explains the rejection or a thank you note for a good feedback

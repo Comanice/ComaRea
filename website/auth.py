@@ -3,7 +3,6 @@ from website.models import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
-import re
 
 
 auth = Blueprint('auth', __name__)
@@ -107,8 +106,7 @@ def sign_up():
         else:
             new_user = User(email=email,
                             username=username,
-                            password=generate_password_hash(password1,
-                            method='pbkdf2:sha256'))
+                            password=generate_password_hash(password1, method='pbkdf2:sha256'))
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=True)
