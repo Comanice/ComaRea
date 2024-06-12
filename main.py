@@ -1,7 +1,6 @@
 from flask import render_template, session
 from website import create_app
 
-
 # Create a Flask Instance
 app = create_app()
 

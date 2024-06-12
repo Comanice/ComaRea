@@ -9,7 +9,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)  # represents the name of the file that was rum
-    app.config['SECRET_KEY'] = 'This is my first website and will be awesome!'
+    app.config['SECRET_KEY'] = 'This is my first website and it will be awesome!'
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     # sqlite/ sqlalchemy database is located at this location
     db.init_app(app)

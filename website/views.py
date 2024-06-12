@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template, request, flash, jsonify, abort
+from flask import Blueprint, render_template, request, flash, jsonify, abort, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Note, User
+from .models import Note, User, Form
 from . import db
 import json
-
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 views = Blueprint('views', __name__)
 
@@ -16,18 +18,25 @@ def home():
 @views.route('/feedback', methods=['GET', 'POST'])
 @login_required
 def notes():
-    if request.method == 'POST':
-        note = request.form.get('note')
+    form = Form()
+    if form.validate_on_submit():
+        note = form.feedback.data
+        new_note = Note(data=note, user_id=current_user.id)
+        db.session.add(new_note)
+        db.session.commit()
+        flash('Note added successfully!', category='success')
+        return redirect(url_for('views.notes'))
 
-        if len(note) < 1:
-            flash('Note is too short!', category='error')
-        else:
-            new_note = Note(data=note, user_id=current_user.id)
-            db.session.add(new_note)
-            db.session.commit()
-            flash('Note added successfully!', category='success')
+    """
+    note = form.feedback.data
+        new_note = Note(data=note, user_id=current_user.id)
+        db.session.add(new_note)
+        db.session.commit()
+        flash('Note added successfully!', category='success')
+        return redirect(url_for('views.notes'))
+    """
 
-    return render_template("feedback.html", user=current_user)
+    return render_template("feedback.html", user=current_user, form=form)
 
 
 @views.route('/delete-note', methods=['POST'])
@@ -42,9 +51,11 @@ def delete_note():
 
     return jsonify({})
 
-@views.route('/user/<username>',methods=['GET', 'POST'])
+
+@views.route('/user/<username>', methods=['GET', 'POST'])
 def userpage(username):
-    possibilities = ['Change appearance', 'See reached level and points', 'Make a point purchase and see status of order']
+    possibilities = ['Change appearance', 'See reached level and points',
+                     'Make a point purchase and see status of order']
     user = User.query.filter_by(username=username).first()
 
     if not user:
@@ -52,10 +63,8 @@ def userpage(username):
 
     if current_user.is_authenticated:
         if current_user.username == username:
-            return render_template("userpage.html", username=username, possibilities=possibilities)
+            return render_template("userpage.html", username=username, user=user, possibilities=possibilities)
         else:
             abort(404)
     else:
         abort(404)
-
-    return render_template('userpage.html', user=user, possibilities=possibilities)

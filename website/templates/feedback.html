@@ -38,10 +38,14 @@
     {% endfor %}
 </ul>
 <form method="POST">
-    <textarea name="note" id="note" class="form-control"></textarea>
+    {{ form.csrf_token }}  <!-- Include CSRF token -->
+     <div class="form-group">
+        {{ form.feedback.label }}
+        {{ form.feedback(class="form-control") }}
+    </div>
     <br />
-    <div align="center">
-    <button type="submit" class="btn btn-custom">Add Note</button>
+    <div align="left">
+    <button type="submit" class="btn btn-custom">Add Feedback</button>
     </div>
 </form>
 {% endblock %}

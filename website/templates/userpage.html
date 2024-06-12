@@ -2,7 +2,18 @@
 {% block title %}My Profile{% endblock %}
 {% block content %}
 <style>
-    color: #DEB992
+    body {
+        color: #DEB992
+    }
+    .btn-custom {
+        background-color: #1BA098;
+        color: white;
+    }
+
+    .btn-custom:hover {
+        background-color: #126d67;
+        color: white;
+    }
 </style>
 <h1 align = center> Hello {{ user.username|capitalize }}! </h1>
 <h3 align = center> Welcome to your profile page! </h3>
@@ -15,4 +26,7 @@
 {% endfor %}
 <br/>
 {{ possibilities.0 }}
+<br/>
+<br/>
+<a href="/feedback" class="btn btn-custom">Give Feedback</a>
 {% endblock %}

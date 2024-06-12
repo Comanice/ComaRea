@@ -1,6 +1,9 @@
 from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired
 
 
 class Note(db.Model):
@@ -18,3 +21,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     username = db.Column(db.String(150), unique=True)
     notes = db.relationship('Note')
+
+
+class Form(FlaskForm):
+    feedback = StringField("Give us your Feedback here:", validators=[DataRequired()])
+    submit = SubmitField("Submit")
